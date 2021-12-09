@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package ru.labs.server;
-
-message ProfileDescriptor  {
-  int64 profile_id = 1;
-  string name = 2;
-}
