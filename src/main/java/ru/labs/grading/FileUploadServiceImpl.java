@@ -3,6 +3,8 @@ package ru.labs.grading;
 import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.labs.grading.repositories.TaskRepository;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,6 +17,13 @@ import java.nio.file.StandardOpenOption;
 public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServiceImplBase {
 
     private static final Path SERVER_BASE_PATH = Paths.get("src/main/resources/output");
+
+    private final TaskRepository taskRepository;
+
+    @Autowired
+    public FileUploadServiceImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @Override
     public StreamObserver<FileUploadRequest> uploadFile(StreamObserver<FileUploadResponse> responseObserver) {
