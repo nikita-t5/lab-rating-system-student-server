@@ -3,3 +3,6 @@ spring:
     name: local-grpc-server
 server:
   port: 8080
+grpc:
+  port: 8090
+  enable-reflection: true

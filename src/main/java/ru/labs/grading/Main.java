@@ -13,11 +13,11 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class);
         System.out.println("hi");
-        Server server = ServerBuilder.forPort(8090)
-                .addService(new GreetingServiceImpl())
-                .build();
-        server.start();
-        System.out.println("server started");
-        server.awaitTermination();
+//        Server server = ServerBuilder.forPort(8090)
+//                .addService(new GreetingServiceImpl())
+//                .build();
+//        server.start();
+//        System.out.println("server started");
+//        server.awaitTermination();
     }
 }
