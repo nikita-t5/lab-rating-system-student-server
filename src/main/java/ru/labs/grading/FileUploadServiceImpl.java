@@ -34,13 +34,13 @@ public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServi
 
             @Override
             public void onNext(FileUploadRequest fileUploadRequest) {
-                try{
-                    if(fileUploadRequest.hasMetadata()){
+                try {
+                    if (fileUploadRequest.hasMetadata()) {
                         writer = getFilePath(fileUploadRequest);
-                    }else{
+                    } else {
                         writeFile(writer, fileUploadRequest.getFile().getContent());
                     }
-                }catch (IOException e){
+                } catch (IOException e) {
                     this.onError(e);
                 }
             }
@@ -66,6 +66,10 @@ public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServi
 
     private OutputStream getFilePath(FileUploadRequest request) throws IOException {
         var fileName = request.getMetadata().getName() + "." + request.getMetadata().getType();
+        //!!!!!!!!!!!
+        System.out.println(request.getMetadata().getName());
+        System.out.println(request.getMetadata().getType());
+        System.out.println(request.getMetadata().getDeveloperFullName());
         return Files.newOutputStream(SERVER_BASE_PATH.resolve(fileName), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
@@ -74,7 +78,7 @@ public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServi
         writer.flush();
     }
 
-    private void closeFile(OutputStream writer){
+    private void closeFile(OutputStream writer) {
         try {
             writer.close();
         } catch (Exception e) {
