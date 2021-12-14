@@ -8,7 +8,7 @@ import java.util.List;
 @Repository//????
 public class TaskRepository {
 
-    private List<TaskDAO> taskDaoList;
+    private final List<TaskDAO> taskDaoList;
 
     public TaskRepository(List<TaskDAO> taskDaoList) {
         this.taskDaoList = taskDaoList;
@@ -18,7 +18,7 @@ public class TaskRepository {
 
     //загр файл своей работы
     public String saveFile(String pathFile, String developerFullName) {
-        TaskDAO taskDAO = new TaskDAO(pathFile, developerFullName);
+        TaskDAO taskDAO = new TaskDAO(developerFullName, pathFile);
         taskDaoList.add(taskDAO);
         return taskDAO.getTaskId();
     }
