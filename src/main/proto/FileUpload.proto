@@ -9,6 +9,7 @@ message MetaData {
   string name = 1;
   string type = 2;
   string developerFullName = 3;
+  string taskId = 4;
 }
 
 message File {
@@ -30,7 +31,6 @@ message FileUploadRequest {
 }
 
 message FileUploadResponse {
-  string name = 1;
   Status status = 2;
 }
 

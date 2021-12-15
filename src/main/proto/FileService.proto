@@ -13,5 +13,5 @@ message DataChunk {
 }
 
 message DownloadFileRequest {
-  string fileName = 1;
+  string taskId = 1;
 }
