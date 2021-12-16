@@ -17,15 +17,15 @@ public class TaskRepository {
     //методы по манипуляции
 
     //загр файл своей работы
-    public void saveFile(String taskId, String developerFullName, String pathFile) {
-        TaskDAO taskDAO = new TaskDAO(taskId, developerFullName, pathFile);
+    public void saveFileMetadata(String taskId, String developerFullName, String fileName) {
+        TaskDAO taskDAO = new TaskDAO(taskId, developerFullName, fileName);
         taskDaoList.add(taskDAO);
     }
 
-    public String getPathFileByTaskId(String taskId) {
+    public String getFileNameByTaskId(String taskId) {
         for (TaskDAO taskDAO : taskDaoList) {
             if (taskDAO.getTaskId().equals(taskId)) {
-                return taskDAO.getPathFile();
+                return taskDAO.getFileName();
             }
         }
         throw new RuntimeException("taskId does not exist on the server");

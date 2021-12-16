@@ -3,20 +3,18 @@ package ru.labs.grading.dao;
 import lombok.Data;
 
 import java.util.List;
-import java.util.UUID;
+
 @Data
 public class TaskDAO {
     private String taskId;
     private String developerFullName;
-//    private String pathFile;
-    private byte[] file;
+    private String fileName;
     private List<AppraiserDAO> appraiserDAOList;
 
-    public TaskDAO(String taskId, String developerFullName, byte[] file) {
+    public TaskDAO(String taskId, String developerFullName, String fileName) {
         this.taskId = taskId;
         this.developerFullName = developerFullName;
-//        this.pathFile = pathFile;
-        this.file = file;
+        this.fileName = fileName;
     }
 
 //    public String getTaskId() {
