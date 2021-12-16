@@ -36,8 +36,6 @@ public class TaskServiceImpl extends TaskServiceGrpc.TaskServiceImplBase {
             taskListResponse.add(task);
         }
 
-//        taskListResponse.add(TaskServiceOuterClass.Task.newBuilder().addRepeatedField("aaa"). build())
-
         TaskServiceOuterClass.TaskListResponse response =
                 TaskServiceOuterClass.TaskListResponse
                         .newBuilder()
