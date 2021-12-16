@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package ru.labs.grading;
+
+import "google/protobuf/empty.proto";
+
+
+message TaskListResponse {
+  repeated Task task = 1;
+}
+
+message Task {
+  string taskId = 1;
+  string developerFullName = 2;
+}
+
+service TaskService {
+  rpc getAllTask(google.protobuf.Empty) returns (TaskListResponse);
+}

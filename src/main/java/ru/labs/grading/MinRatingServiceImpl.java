@@ -20,15 +20,6 @@ public class MinRatingServiceImpl extends MinRatingServiceGrpc.MinRatingServiceI
 
     @Override
     public void getAverageRatingByTaskId(MinRatingServiceOuterClass.Empty request, StreamObserver<MinRatingServiceOuterClass.MinRatingResponse> responseObserver) {
-//        int a = 0;
-//
-//        List<String> arr = new ArrayList<>();
-//        arr.add("aaaa");
-//        arr.add("bbb");
-//        arr.add("ccc");
-
-        //получить List taskId с мин кол оценок
-
         List<String> minRatingList = taskRepository.getMinRatingList();
 
         MinRatingServiceOuterClass.MinRatingResponse response =

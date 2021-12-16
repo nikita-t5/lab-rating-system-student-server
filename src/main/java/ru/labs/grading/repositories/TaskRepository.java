@@ -1,5 +1,6 @@
 package ru.labs.grading.repositories;
 
+import lombok.Getter;
 import org.springframework.stereotype.Repository;
 import ru.labs.grading.dao.AppraiserDAO;
 import ru.labs.grading.dao.TaskDAO;
@@ -9,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Repository//????
+@Getter
 public class TaskRepository {
 
     private final List<TaskDAO> taskDaoList;
@@ -73,4 +75,7 @@ public class TaskRepository {
         }
         return minRatingList;
     }
+
+
+
 }
