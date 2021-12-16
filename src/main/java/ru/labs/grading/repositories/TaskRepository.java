@@ -23,13 +23,23 @@ public class TaskRepository {
     }
 
     public String getFileNameByTaskId(String taskId) {
+       return findTaskDaoByTaskId(taskId).getFileName();
+    }
+
+
+    public String setRatingByEvaluationDto(String taskId, String appraiserFullName, Integer rating) {
+       TaskDAO taskDAO =  findTaskDaoByTaskId(taskId);
+       taskDAO.addAppraiserDAO(appraiserFullName, rating);
+       return taskDAO.getTaskId();
+    }
+
+
+    private TaskDAO findTaskDaoByTaskId(String taskId){
         for (TaskDAO taskDAO : taskDaoList) {
             if (taskDAO.getTaskId().equals(taskId)) {
-                return taskDAO.getFileName();
+                return taskDAO;
             }
         }
         throw new RuntimeException("taskId does not exist on the server");
     }
-
-
 }

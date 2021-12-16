@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package ru.labs.grading;
+
+message PostRatingRequest {
+  string taskId = 1;
+  string appraiserFullName = 2;
+  int32 rating = 3;
+}
+
+message PostRatingResponse {
+  string taskIdResponse = 1;
+}
+
+service PostRatingService {
+  rpc postRatingByEvaluationDto(PostRatingRequest) returns (PostRatingResponse);
+}

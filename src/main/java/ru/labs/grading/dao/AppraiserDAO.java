@@ -1,6 +1,9 @@
 package ru.labs.grading.dao;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class AppraiserDAO {
-    private String appraiserFullName;
-    private int markFromAppraiser;
+    private final String appraiserFullName;
+    private final Integer markFromAppraiser;
 }

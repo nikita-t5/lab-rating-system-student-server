@@ -2,6 +2,7 @@ package ru.labs.grading.dao;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,6 +16,12 @@ public class TaskDAO {
         this.taskId = taskId;
         this.developerFullName = developerFullName;
         this.fileName = fileName;
+        this.appraiserDAOList = new ArrayList<>();
+    }
+
+    public void addAppraiserDAO(String appraiserFullName, Integer markFromAppraiser) {
+        AppraiserDAO appraiserDAO = new AppraiserDAO(appraiserFullName, markFromAppraiser);
+        appraiserDAOList.add(appraiserDAO);
     }
 
 //    public String getTaskId() {
