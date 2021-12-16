@@ -17,7 +17,7 @@ public class PostRatingServiceImpl extends PostRatingServiceGrpc.PostRatingServi
 
     @Override
     public void postRatingByEvaluationDto(PostRatingServiceOuterClass.PostRatingRequest request, StreamObserver<PostRatingServiceOuterClass.PostRatingResponse> responseObserver) {
-        System.out.println(request);
+        System.out.println(request); //as log
         String taskId = request.getTaskId();
         String appraiserFullName = request.getAppraiserFullName();
         Integer rating = request.getRating();
