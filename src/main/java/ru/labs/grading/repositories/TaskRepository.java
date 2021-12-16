@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import ru.labs.grading.dao.AppraiserDAO;
 import ru.labs.grading.dao.TaskDAO;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository//????
@@ -58,4 +60,17 @@ public class TaskRepository {
         throw new RuntimeException("taskId does not exist on the server");
     }
 
+    public List<String> getMinRatingList() {
+        List<String> minRatingList = new ArrayList<>();
+
+        if (taskDaoList.size() < 3) {
+            throw new RuntimeException("Not enough appraiser for implementation");
+        }
+        Comparator<TaskDAO> comparator = Comparator.comparing(obj -> obj.getAppraiserDAOList().size());
+        taskDaoList.sort(comparator);
+        for (int i = 0; i < 3; i++) {
+            minRatingList.add(taskDaoList.get(i).getTaskId());
+        }
+        return minRatingList;
+    }
 }

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package ru.labs.grading;
+
+message MinRatingResponse {
+  repeated string taskId = 2;
+}
+
+message Empty {
+
+}
+
+service MinRatingService {
+  rpc getAverageRatingByTaskId(Empty) returns (MinRatingResponse);
+}
