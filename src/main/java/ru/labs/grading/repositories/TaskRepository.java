@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.stereotype.Repository;
 import ru.labs.grading.dao.AppraiserDAO;
 import ru.labs.grading.dao.TaskDAO;
+import ru.labs.grading.dto.EvaluationDTO;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -76,6 +77,13 @@ public class TaskRepository {
         return minRatingList;
     }
 
-
-
+    public List<EvaluationDTO> getEvaluationDTOListByTaskId(String taskId) {
+        final List<EvaluationDTO> evaluationDTOList = new ArrayList<>();
+        final TaskDAO taskDAO = findTaskDaoByTaskId(taskId);
+        final List<AppraiserDAO> appraiserDAOList = taskDAO.getAppraiserDAOList();
+        for (AppraiserDAO appraiserDAO : appraiserDAOList) {
+            evaluationDTOList.add(new EvaluationDTO(taskDAO.getTaskId(), appraiserDAO.getAppraiserFullName(), appraiserDAO.getMarkFromAppraiser()));
+        }
+        return evaluationDTOList;
+    }
 }

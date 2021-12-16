@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ru.labs.grading;
+
+message EvaluationResponse {
+  repeated Evaluation evaluation = 1;
+}
+
+message Evaluation {
+  string taskId = 1;
+  string appraiserFullName = 2;
+  int32 rating = 3;
+}
+
+message EvaluationRequest {
+  string taskId = 1;
+}
+
+service EvaluationTaskService {
+  rpc getAllEvaluationTask (EvaluationRequest) returns (EvaluationResponse);
+}
