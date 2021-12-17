@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-@Repository//????
+@Repository
 @Getter
 public class TaskRepository {
 
@@ -20,9 +20,6 @@ public class TaskRepository {
         this.taskDaoList = taskDaoList;
     }
 
-    //методы по манипуляции
-
-    //загр файл своей работы
     public void saveFileMetadata(String taskId, String developerFullName, String fileName) {
         TaskDAO taskDAO = new TaskDAO(taskId, developerFullName, fileName);
         taskDaoList.add(taskDAO);
@@ -32,13 +29,11 @@ public class TaskRepository {
         return findTaskDaoByTaskId(taskId).getFileName();
     }
 
-
     public String setRatingByEvaluationDto(String taskId, String appraiserFullName, Integer rating) {
         TaskDAO taskDAO = findTaskDaoByTaskId(taskId);
         taskDAO.addAppraiserDAO(appraiserFullName, rating);
         return taskDAO.getTaskId();
     }
-
 
     public Double getAverageRatingByTaskId(String taskId) {
         TaskDAO taskDAO = findTaskDaoByTaskId(taskId);
@@ -51,16 +46,6 @@ public class TaskRepository {
             sumRating += appraiserDAO.getMarkFromAppraiser();
         }
         return sumRating / appraiserDAOList.size();
-    }
-
-
-    private TaskDAO findTaskDaoByTaskId(String taskId) {
-        for (TaskDAO taskDAO : taskDaoList) {
-            if (taskDAO.getTaskId().equals(taskId)) {
-                return taskDAO;
-            }
-        }
-        throw new RuntimeException("taskId does not exist on the server");
     }
 
     public List<String> getMinRatingList() {
@@ -85,5 +70,14 @@ public class TaskRepository {
             evaluationDTOList.add(new EvaluationDTO(taskDAO.getTaskId(), appraiserDAO.getAppraiserFullName(), appraiserDAO.getMarkFromAppraiser()));
         }
         return evaluationDTOList;
+    }
+
+    private TaskDAO findTaskDaoByTaskId(String taskId) {
+        for (TaskDAO taskDAO : taskDaoList) {
+            if (taskDAO.getTaskId().equals(taskId)) {
+                return taskDAO;
+            }
+        }
+        throw new RuntimeException("taskId does not exist on the server");
     }
 }

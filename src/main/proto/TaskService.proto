@@ -4,7 +4,6 @@ package ru.labs.grading;
 
 import "google/protobuf/empty.proto";
 
-
 message TaskListResponse {
   repeated Task task = 1;
 }

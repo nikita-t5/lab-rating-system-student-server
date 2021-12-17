@@ -23,12 +23,4 @@ public class TaskDAO {
         AppraiserDAO appraiserDAO = new AppraiserDAO(appraiserFullName, markFromAppraiser);
         appraiserDAOList.add(appraiserDAO);
     }
-
-//    public String getTaskId() {
-//        return taskId;
-//    }
-
-    //    public TaskDAO(String pathFile, String developerFullName) {
-//
-//    }
 }

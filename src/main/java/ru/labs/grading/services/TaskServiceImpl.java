@@ -1,15 +1,19 @@
-package ru.labs.grading;
+package ru.labs.grading.services;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.labs.grading.TaskServiceGrpc;
+import ru.labs.grading.TaskServiceOuterClass;
 import ru.labs.grading.dao.TaskDAO;
 import ru.labs.grading.repositories.TaskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @GRpcService
 public class TaskServiceImpl extends TaskServiceGrpc.TaskServiceImplBase {
 
@@ -22,6 +26,8 @@ public class TaskServiceImpl extends TaskServiceGrpc.TaskServiceImplBase {
 
     @Override
     public void getAllTask(Empty request, StreamObserver<TaskServiceOuterClass.TaskListResponse> responseObserver) {
+        log.info("Start getting all task");
+
         final List<TaskDAO> allTask = taskRepository.getTaskDaoList();
         final List<TaskServiceOuterClass.Task> taskListResponse = new ArrayList<>();
 

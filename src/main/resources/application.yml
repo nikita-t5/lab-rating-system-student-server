@@ -6,3 +6,5 @@ server:
 grpc:
   port: 8090
   enable-reflection: true
+const:
+  outputPath: file:/C:/lab-rating-system-student-server/src/main/resources/output

@@ -2,11 +2,6 @@ syntax = "proto3";
 option java_multiple_files = true;
 package ru.labs.grading;
 
-
-service FileService {
-  rpc downloadFile (DownloadFileRequest) returns (stream DataChunk);
-}
-
 message DataChunk {
   bytes data = 1;
   int32 size = 2;
@@ -14,4 +9,8 @@ message DataChunk {
 
 message DownloadFileRequest {
   string taskId = 1;
+}
+
+service FileService {
+  rpc downloadFile (DownloadFileRequest) returns (stream DataChunk);
 }

@@ -5,9 +5,9 @@ package ru.labs.grading;
 import "google/protobuf/empty.proto";
 
 message MinRatingResponse {
-  repeated string taskId = 2;
+  repeated string taskId = 1;
 }
 
 service MinRatingService {
-  rpc getAverageRatingByTaskId(google.protobuf.Empty) returns (MinRatingResponse);
+  rpc getMinRatingList(google.protobuf.Empty) returns (MinRatingResponse);
 }

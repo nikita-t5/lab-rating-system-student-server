@@ -1,10 +1,14 @@
-package ru.labs.grading;
+package ru.labs.grading.services;
 
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.labs.grading.PostRatingServiceGrpc;
+import ru.labs.grading.PostRatingServiceOuterClass;
 import ru.labs.grading.repositories.TaskRepository;
 
+@Slf4j
 @GRpcService
 public class PostRatingServiceImpl extends PostRatingServiceGrpc.PostRatingServiceImplBase {
 
@@ -17,12 +21,12 @@ public class PostRatingServiceImpl extends PostRatingServiceGrpc.PostRatingServi
 
     @Override
     public void postRatingByEvaluationDto(PostRatingServiceOuterClass.PostRatingRequest request, StreamObserver<PostRatingServiceOuterClass.PostRatingResponse> responseObserver) {
-        System.out.println(request); //as log
-        String taskId = request.getTaskId();
-        String appraiserFullName = request.getAppraiserFullName();
-        Integer rating = request.getRating();
+        log.info("Start setting rating for taskID :: {}", request.getTaskId());
+        final String taskId = request.getTaskId();
+        final String appraiserFullName = request.getAppraiserFullName();
+        final Integer rating = request.getRating();
 
-        String taskIdResponse = taskRepository.setRatingByEvaluationDto(taskId, appraiserFullName,rating);
+        final String taskIdResponse = taskRepository.setRatingByEvaluationDto(taskId, appraiserFullName, rating);
 
         PostRatingServiceOuterClass.PostRatingResponse response =
                 PostRatingServiceOuterClass.PostRatingResponse

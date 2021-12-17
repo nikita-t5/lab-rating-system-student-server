@@ -1,10 +1,14 @@
-package ru.labs.grading;
+package ru.labs.grading.services;
 
 import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.labs.grading.FileUploadRequest;
+import ru.labs.grading.FileUploadResponse;
+import ru.labs.grading.FileUploadServiceGrpc;
+import ru.labs.grading.Status;
 import ru.labs.grading.repositories.TaskRepository;
 
 import java.io.IOException;
@@ -14,7 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-@GRpcService //анатации нет в примере
+@GRpcService
 @Slf4j
 public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServiceImplBase {
 
@@ -29,6 +33,8 @@ public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServi
 
     @Override
     public StreamObserver<FileUploadRequest> uploadFile(StreamObserver<FileUploadResponse> responseObserver) {
+        log.info("Start uploading file");
+
         return new StreamObserver<FileUploadRequest>() {
             OutputStream writer;
             Status status = Status.IN_PROGRESS;
@@ -37,9 +43,9 @@ public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServi
             public void onNext(FileUploadRequest fileUploadRequest) {
                 try {
                     if (fileUploadRequest.hasMetadata()) {
-                        String taskId = fileUploadRequest.getMetadata().getTaskId();
-                        String fileName = taskId + "-" + fileUploadRequest.getMetadata().getName() + "." + fileUploadRequest.getMetadata().getType();
-                        String developerFullName = fileUploadRequest.getMetadata().getDeveloperFullName();
+                        final String taskId = fileUploadRequest.getMetadata().getTaskId();
+                        final String fileName = taskId + "-" + fileUploadRequest.getMetadata().getName() + "." + fileUploadRequest.getMetadata().getType();
+                        final String developerFullName = fileUploadRequest.getMetadata().getDeveloperFullName();
                         writer = getFilePath(fileName);
                         saveFileMetadataToRepository(taskId, developerFullName, fileName);
                     } else {
@@ -90,5 +96,4 @@ public class FileUploadServiceImpl extends FileUploadServiceGrpc.FileUploadServi
             e.printStackTrace();
         }
     }
-
 }

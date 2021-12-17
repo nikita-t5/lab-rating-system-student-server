@@ -1,4 +1,4 @@
-package ru.labs.grading;
+package ru.labs.grading.services;
 
 import com.google.protobuf.ByteString;
 import io.grpc.Status;
@@ -6,9 +6,12 @@ import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import ru.labs.grading.DataChunk;
+import ru.labs.grading.DownloadFileRequest;
+import ru.labs.grading.FileServiceGrpc;
 import ru.labs.grading.repositories.TaskRepository;
 
-import java.io.File;
 import java.io.*;
 import java.net.URI;
 import java.nio.file.Files;
@@ -21,19 +24,22 @@ public class FileServiceImpl extends FileServiceGrpc.FileServiceImplBase {
 
     private final TaskRepository taskRepository;
 
-    @Autowired
-    public FileServiceImpl(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    private final String OUTPUT_PATH;
 
+    @Autowired
+    public FileServiceImpl(TaskRepository taskRepository, @Value("${const.outputPath}") String OUTPUT_PATH) {
+        this.taskRepository = taskRepository;
+        this.OUTPUT_PATH = OUTPUT_PATH;
+    }
 
     @Override
     public void downloadFile(DownloadFileRequest request, StreamObserver<DataChunk> responseObserver) {
+        log.info("Start downloading file for taskID :: {}", request.getTaskId());
         try {
-            String fileName = taskRepository.getFileNameByTaskId(request.getTaskId());
-            URI uriResource = new URI("file:/C:/lab-rating-system-student-server/src/main/resources/output");
+            final String fileName = taskRepository.getFileNameByTaskId(request.getTaskId());
+            final URI uriResource = new URI(OUTPUT_PATH);
 
-            File fileFromResources = Files.walk(Paths.get(uriResource))
+            final File fileFromResources = Files.walk(Paths.get(uriResource))
                     .filter(Files::isRegularFile)
                     .map(Path::toFile)
                     .filter(file -> file.getName().equals(fileName))

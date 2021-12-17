@@ -1,13 +1,17 @@
-package ru.labs.grading;
+package ru.labs.grading.services;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.labs.grading.MinRatingServiceGrpc;
+import ru.labs.grading.MinRatingServiceOuterClass;
 import ru.labs.grading.repositories.TaskRepository;
 
 import java.util.List;
 
+@Slf4j
 @GRpcService
 public class MinRatingServiceImpl extends MinRatingServiceGrpc.MinRatingServiceImplBase {
 
@@ -19,8 +23,10 @@ public class MinRatingServiceImpl extends MinRatingServiceGrpc.MinRatingServiceI
     }
 
     @Override
-    public void getAverageRatingByTaskId(Empty request, StreamObserver<MinRatingServiceOuterClass.MinRatingResponse> responseObserver) {
-        List<String> minRatingList = taskRepository.getMinRatingList();
+    public void getMinRatingList(Empty request, StreamObserver<MinRatingServiceOuterClass.MinRatingResponse> responseObserver) {
+        log.info("Start getting min rating list");
+
+        final List<String> minRatingList = taskRepository.getMinRatingList();
 
         MinRatingServiceOuterClass.MinRatingResponse response =
                 MinRatingServiceOuterClass.MinRatingResponse

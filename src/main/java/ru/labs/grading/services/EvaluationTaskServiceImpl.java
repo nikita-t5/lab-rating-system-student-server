@@ -1,16 +1,21 @@
-package ru.labs.grading;
+package ru.labs.grading.services;
 
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.labs.grading.EvaluationTaskServiceGrpc;
+import ru.labs.grading.EvaluationTaskServiceOuterClass;
 import ru.labs.grading.dto.EvaluationDTO;
 import ru.labs.grading.repositories.TaskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @GRpcService
 public class EvaluationTaskServiceImpl extends EvaluationTaskServiceGrpc.EvaluationTaskServiceImplBase {
+
     private final TaskRepository taskRepository;
 
     @Autowired
@@ -20,6 +25,8 @@ public class EvaluationTaskServiceImpl extends EvaluationTaskServiceGrpc.Evaluat
 
     @Override
     public void getAllEvaluationTask(EvaluationTaskServiceOuterClass.EvaluationRequest request, StreamObserver<EvaluationTaskServiceOuterClass.EvaluationResponse> responseObserver) {
+        log.info("Start getting evaluation taskID :: {}", request.getTaskId());
+
         final String taskIdFromRequest = request.getTaskId();
         final List<EvaluationDTO> evaluationDTOList = taskRepository.getEvaluationDTOListByTaskId(taskIdFromRequest);
         final List<EvaluationTaskServiceOuterClass.Evaluation> evaluationListResponse = new ArrayList<>();
